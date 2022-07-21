@@ -1,5 +1,5 @@
 name: wecode_firebase_flutter
-description: A new Flutter project.
+description: Guys I'm not sure what's wrong with the sound.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -35,6 +35,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   firebase_core: ^1.19.2
+  cloud_firestore: ^3.3.0
 
 dev_dependencies:
   flutter_test:
