@@ -19,23 +19,60 @@ class CrudOperationsScreen extends StatelessWidget {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            //to get data using future builder
+            // getDataUsingFutureBuilder(),
+
             Container(
-              child: FutureBuilder<DocumentSnapshot>(
-                  future: readTheSingleDocument(),
-                  builder: (envan, snapshot) {
+              height: 500,
+              padding: EdgeInsets.all(20),
+              child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                  stream: _firebaseFirestore.collection('names').snapshots(),
+                  builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return CircularProgressIndicator();
-                    } else if (snapshot.data == null || !snapshot.hasData) {
-                      return Text('empty');
                     } else if (snapshot.hasError) {
-                      return Text(snapshot.error.toString());
+                      return Text('err ${snapshot.error}');
+                    } else if (snapshot.data == null) {
+                      return Text('no Data');
                     }
-                    Map<String, dynamic> name =
-                        snapshot.data!.data() as Map<String, dynamic>;
+                    snapshot.data!.docs.first;
 
-                    return Text(name.values.first);
+                    return ListView.separated(
+                      itemCount: snapshot.data!.docs.length,
+                      separatorBuilder: (BuildContext context, int index) {
+                        return Divider();
+                      },
+                      itemBuilder: (BuildContext context, int index) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(snapshot.data!.docs[index]
+                                .data()["first_name"]
+                                .toString()),
+                            IconButton(
+                                onPressed: () {
+                                  _firebaseFirestore
+                                      .collection('names')
+                                      .where("first_name",
+                                          isEqualTo: snapshot.data!.docs[index]
+                                              .data()["first_name"])
+                                      .get()
+                                      .then((value) =>
+                                          value.docs.first.reference.delete());
+                                },
+                                icon: Icon(Icons.delete))
+                          ],
+                        );
+                      },
+                    );
+
+                    // return Text(snapshot.data!.docs.first
+                    //     .data()["first_name"]
+                    //     .toString());
                   }),
             ),
+
+            // readOneDocumentWidget(),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Form(
@@ -88,5 +125,66 @@ class CrudOperationsScreen extends StatelessWidget {
         await _firebaseFirestore.doc("names/QXAKIZJQeG46rCfbczBQ").get();
     print(_doc.data());
     return _doc;
+  }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> getDataOnceUsingFuture() async {
+    return await _firebaseFirestore.collection('names').get();
+  }
+
+  Widget getDataUsingFutureBuilder() {
+    return Column(
+      children: [
+        Text('read the entire collection documents once'),
+        Container(
+          height: 350,
+          child: FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+              future: getDataOnceUsingFuture(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasError) {
+                  return Text(snapshot.error.toString());
+                } else if (snapshot.data == null) {
+                  return Text('no data');
+                }
+
+                return ListView.builder(
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      return Text(snapshot.data!.docs[index]
+                          .data()["first_name"]
+                          .toString());
+                    });
+              }),
+        ),
+      ],
+    );
+  }
+
+  Widget readOneDocumentWidget() {
+    return Column(
+      children: [
+        Text('read one specific document'),
+        Container(
+          child: FutureBuilder<DocumentSnapshot>(
+              future: readTheSingleDocument(),
+              builder: (envan, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                } else if (snapshot.data == null || !snapshot.hasData) {
+                  return Text('empty');
+                } else if (snapshot.hasError) {
+                  return Text(snapshot.error.toString());
+                }
+                Map<String, dynamic> name =
+                    snapshot.data!.data() as Map<String, dynamic>;
+
+                return Text(name.values.first);
+              }),
+        ),
+      ],
+    );
   }
 }
