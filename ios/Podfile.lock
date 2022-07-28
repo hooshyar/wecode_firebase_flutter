@@ -606,14 +606,26 @@ PODS:
     - Firebase/Firestore (= 9.2.0)
     - firebase_core
     - Flutter
+  - Firebase/Auth (9.2.0):
+    - Firebase/CoreOnly
+    - FirebaseAuth (~> 9.2.0)
   - Firebase/CoreOnly (9.2.0):
     - FirebaseCore (= 9.2.0)
   - Firebase/Firestore (9.2.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 9.2.0)
+  - firebase_auth (3.6.1):
+    - Firebase/Auth (= 9.2.0)
+    - firebase_core
+    - Flutter
   - firebase_core (1.19.2):
     - Firebase/CoreOnly (= 9.2.0)
     - Flutter
+  - FirebaseAuth (9.2.0):
+    - FirebaseCore (~> 9.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
+    - GoogleUtilities/Environment (~> 7.7)
+    - GTMSessionFetcher/Core (< 3.0, >= 1.7)
   - FirebaseCore (9.2.0):
     - FirebaseCoreDiagnostics (~> 9.0)
     - FirebaseCoreInternal (~> 9.0)
@@ -644,11 +656,21 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/AppDelegateSwizzler (7.7.0):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
   - GoogleUtilities/Environment (7.7.0):
     - PromisesObjC (< 3.0, >= 1.2)
   - GoogleUtilities/Logger (7.7.0):
     - GoogleUtilities/Environment
+  - GoogleUtilities/Network (7.7.0):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
   - "GoogleUtilities/NSData+zlib (7.7.0)"
+  - GoogleUtilities/Reachability (7.7.0):
+    - GoogleUtilities/Logger
   - "gRPC-C++ (1.44.0)":
     - "gRPC-C++/Implementation (= 1.44.0)"
     - "gRPC-C++/Interface (= 1.44.0)"
@@ -700,6 +722,7 @@ PODS:
     - gRPC-Core/Interface (= 1.44.0)
     - Libuv-gRPC (= 0.0.10)
   - gRPC-Core/Interface (1.44.0)
+  - GTMSessionFetcher/Core (2.0.0)
   - leveldb-library (1.22.1)
   - Libuv-gRPC (0.0.10):
     - Libuv-gRPC/Implementation (= 0.0.10)
@@ -716,6 +739,7 @@ PODS:
 
 DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
+  - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - Flutter (from `Flutter`)
 
@@ -724,6 +748,7 @@ SPEC REPOS:
     - abseil
     - BoringSSL-GRPC
     - Firebase
+    - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseCoreInternal
@@ -732,6 +757,7 @@ SPEC REPOS:
     - GoogleUtilities
     - "gRPC-C++"
     - gRPC-Core
+    - GTMSessionFetcher
     - leveldb-library
     - Libuv-gRPC
     - nanopb
@@ -740,6 +766,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
+  firebase_auth:
+    :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
   Flutter:
@@ -750,7 +778,9 @@ SPEC CHECKSUMS:
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   cloud_firestore: 08dddc0c63b2b1b6474fd5f30aa5e8d8aedd5353
   Firebase: 4ba896cb8e5105d4b9e247e1c1b6222b548df55a
+  firebase_auth: 31d952e1bc738fa3a13492c96a2c306134a3b185
   firebase_core: ada8be870601fe3c2684dae2356f634189bd598f
+  FirebaseAuth: 1c574ab64a051dd86dbe7fd5a3f86b58155b3482
   FirebaseCore: 0e27f2a15d8f7b7ef11e7d93e23b1cbab55d748c
   FirebaseCoreDiagnostics: 060eb57cc56dfaf40b1b1b5874a5c17c41ce79f8
   FirebaseCoreInternal: 635d1c9a612a6502b6377a0c92af83758076ffff
@@ -760,6 +790,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
   "gRPC-C++": 9675f953ace2b3de7c506039d77be1f2e77a8db2
   gRPC-Core: 943e491cb0d45598b0b0eb9e910c88080369290b
+  GTMSessionFetcher: 681175626052e03fdde7952f7e9c7a9785719506
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
