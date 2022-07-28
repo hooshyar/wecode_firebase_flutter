@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:wecode_firebase_flutter/src/screens/register_screen_view.dart';
+import 'package:wecode_firebase_flutter/src/services/auth_service.dart';
 
 class LoginScreenView extends StatelessWidget {
   LoginScreenView({Key? key}) : super(key: key);
+
+  final Auth _auth = Auth();
+
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -25,12 +29,6 @@ class LoginScreenView extends StatelessWidget {
           }
           return theUserIsLoggedIn(snapshot.data!.email!);
         });
-  }
-
-  Future<UserCredential> loginWithUserAndPassword(
-      {required String email, required String password}) {
-    return FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: email, password: password);
   }
 
   Widget notLoggedIn(context) {
@@ -82,7 +80,8 @@ class LoginScreenView extends StatelessWidget {
                           debugPrint("username: ${_userNameController.text}");
                           debugPrint("password: ${_passwordController.text}");
 
-                          await loginWithUserAndPassword(
+                          await _auth
+                              .loginWithUserAndPassword(
                                   email: _userNameController.text,
                                   password: _passwordController.text)
                               .then((value) => print(value.user!.email));
