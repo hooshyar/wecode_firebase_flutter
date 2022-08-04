@@ -53,11 +53,9 @@ class RegisterScreenView extends StatelessWidget {
                           debugPrint("username: ${_userNameController.text}");
                           debugPrint("password: ${_passwordController.text}");
 
-                          _auth
-                              .registerWithEmailAndPassword(
-                                  _userNameController.text,
-                                  _passwordController.text)
-                              .then((value) => print(value.user!.uid));
+                          _auth.registerWithEmailAndPassword(
+                              _userNameController.text,
+                              _passwordController.text);
                         },
                         child: Text('Register')))
               ],
