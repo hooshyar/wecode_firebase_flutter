@@ -29,6 +29,7 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
           children: [
             _selectedImage == null
                 ? Container(
+                    width: MediaQuery.of(context).size.width > 800 ? 4 : 2,
                     child: Text('please select an image'),
                   )
                 : Container(
